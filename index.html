@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nigerian Savings & Investments Calculator - Plan your financial future">
+    <title>💰 NaijaWealth Calculator | Savings & Investment Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">💰</div>
+                <div>
+                    <h1>Naija<span>Wealth</span> Calculator</h1>
+                    <p class="tagline">Plan Your Financial Future in Nigeria 🇳🇬</p>
+                </div>
+            </div>
+            
+            <div class="header-badges">
+                <div class="badge">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Investment Calculator</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-piggy-bank"></i>
+                    <span>Savings Planner</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-handshake"></i>
+                    <span>Affiliate Partners</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Savings Calculator -->
+            <section class="calculator-card">
+                <div class="card-header">
+                    <i class="fas fa-calculator"></i>
+                    <h2>Savings & Investment Calculator</h2>
+                    <span class="card-badge">Live Calculator</span>
+                </div>
+                
+                <div class="calculator-tabs">
+                    <button class="calc-tab active" data-tab="savings">
+                        <i class="fas fa-piggy-bank"></i> Savings
+                    </button>
+                    <button class="calc-tab" data-tab="investment">
+                        <i class="fas fa-chart-line"></i> Investment
+                    </button>
+                    <button class="calc-tab" data-tab="comparison">
+                        <i class="fas fa-balance-scale"></i> Compare
+                    </button>
+                    <button class="calc-tab" data-tab="retirement">
+                        <i class="fas fa-umbrella-beach"></i> Retirement
+                    </button>
+                </div>
+                
+                <!-- Savings Tab -->
+                <div id="savings" class="calc-content active">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="monthly-savings">
+                                <i class="fas fa-wallet"></i> Monthly Savings (₦)
+                            </label>
+                            <div class="input-with-icon">
+                                <span class="currency">₦</span>
+                                <input type="number" id="monthly-savings" value="50000" min="1000" step="1000">
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="savings-slider" min="1000" max="1000000" value="50000" step="1000">
+                                <div class="slider-ticks">
+                                    <span>₦1k</span>
+                                    <span>₦250k</span>
+                                    <span>₦500k</span>
+                                    <span>₦1M</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="savings-period">
+                                <i class="fas fa-calendar-alt"></i> Savings Period (Years)
+                            </label>
+                            <div class="input-with-icon">
+                                <input type="number" id="savings-period" value="5" min="1" max="50">
+                                <span class="suffix">years</span>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" id="period-slider" min="1" max="30" value="5" step="1">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="interest-rate">
+                                <i class="fas fa-percentage"></i> Annual Interest Rate (%)
+                            </label>
+                            <div class="input-with-icon">
+                                <input type="number" id="interest-rate" value="10" min="0" max="50" step="0.1">
+                                <span class="suffix">%</span>
+                            </div>
+                            <div class="rate-presets">
+                                <button class="rate-preset" data-rate="3">Bank Savings</button>
+                                <button class="rate-preset" data-rate="10">Fixed Deposit</button>
+                                <button class="rate-preset" data-rate="15">Money Market</button>
+                                <button class="rate-preset" data-rate="20">High Yield</button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="compounding">
+                                <i class="fas fa-redo-alt"></i> Compounding Frequency
+                            </label>
+                            <select id="compounding">
+                                <option value="1">Monthly</option>
+                                <option value="4">Quarterly</option>
+                                <option value="2">Semi-Annually</option>
+                                <option value="1">Annually</option>
+                                <option value="12">Daily</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-savings" class="primary-btn calculate-btn">
+                        <i class="fas fa-chart-bar"></i> Calculate Savings Growth
+                    </button>
+                </div>
+                
+                <!-- Investment Tab -->
+                <div id="investment" class="calc-content">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="initial-investment">
+                                <i class="fas fa-money-bill-wave"></i> Initial Investment (₦)
+                            </label>
+                            <div class="input-with-icon">
+                                <span class="currency">₦</span>
+                                <input type="number" id="initial-investment" value="100000" min="1000" step="1000">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="monthly-contribution">
+                                <i class="fas fa-calendar-plus"></i> Monthly Contribution (₦)
+                            </label>
+                            <div class="input-with-icon">
+                                <span class="currency">₦</span>
+                                <input type="number" id="monthly-contribution" value="20000" min="0" step="1000">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="investment-period">
+                                <i class="fas fa-clock"></i> Investment Period
+                            </label>
+                            <select id="investment-period">
+                                <option value="1">1 Year</option>
+                                <option value="3">3 Years</option>
+                                <option value="5" selected>5 Years</option>
+                                <option value="10">10 Years</option>
+                                <option value="15">15 Years</option>
+                                <option value="20">20 Years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="expected-return">
+                                <i class="fas fa-rocket"></i> Expected Annual Return (%)
+                            </label>
+                            <div class="input-with-icon">
+                                <input type="number" id="expected-return" value="15" min="1" max="100" step="0.1">
+                                <span class="suffix">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="investment-type">
+                        <h4><i class="fas fa-layer-group"></i> Investment Type</h4>
+                        <div class="investment-options">
+                            <label class="investment-option">
+                                <input type="radio" name="investment-type" value="stocks" checked>
+                                <div class="option-card">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Stocks (10-20%)</span>
+                                </div>
+                            </label>
+                            <label class="investment-option">
+                                <input type="radio" name="investment-type" value="bonds">
+                                <div class="option-card">
+                                    <i class="fas fa-file-contract"></i>
+                                    <span>Bonds (8-12%)</span>
+                                </div>
+                            </label>
+                            <label class="investment-option">
+                                <input type="radio" name="investment-type" value="real-estate">
+                                <div class="option-card">
+                                    <i class="fas fa-home"></i>
+                                    <span>Real Estate (15-25%)</span>
+                                </div>
+                            </label>
+                            <label class="investment-option">
+                                <input type="radio" name="investment-type" value="crypto">
+                                <div class="option-card">
+                                    <i class="fas fa-bitcoin"></i>
+                                    <span>Crypto (20-100%)</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-investment" class="primary-btn calculate-btn">
+                        <i class="fas fa-chart-pie"></i> Calculate Investment Growth
+                    </button>
+                </div>
+                
+                <!-- Comparison Tab -->
+                <div id="comparison" class="calc-content">
+                    <div class="comparison-container">
+                        <h4><i class="fas fa-balance-scale"></i> Compare Different Strategies</h4>
+                        
+                        <div class="strategy-comparison">
+                            <div class="strategy">
+                                <div class="strategy-header">
+                                    <h5>Conservative</h5>
+                                    <span class="strategy-badge">Low Risk</span>
+                                </div>
+                                <div class="strategy-inputs">
+                                    <label>Annual Return: <input type="number" class="strategy-return" value="8" min="1" max="30">%</label>
+                                    <label>Risk Level: <span class="risk-level low">Low</span></label>
+                                </div>
+                            </div>
+                            
+                            <div class="strategy">
+                                <div class="strategy-header">
+                                    <h5>Balanced</h5>
+                                    <span class="strategy-badge">Medium Risk</span>
+                                </div>
+                                <div class="strategy-inputs">
+                                    <label>Annual Return: <input type="number" class="strategy-return" value="12" min="1" max="30">%</label>
+                                    <label>Risk Level: <span class="risk-level medium">Medium</span></label>
+                                </div>
+                            </div>
+                            
+                            <div class="strategy">
+                                <div class="strategy-header">
+                                    <h5>Aggressive</h5>
+                                    <span class="strategy-badge">High Risk</span>
+                                </div>
+                                <div class="strategy-inputs">
+                                    <label>Annual Return: <input type="number" class="strategy-return" value="18" min="1" max="30">%</label>
+                                    <label>Risk Level: <span class="risk-level high">High</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="compare-strategies" class="primary-btn">
+                            <i class="fas fa-chart-bar"></i> Compare Strategies
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Retirement Tab -->
+                <div id="retirement" class="calc-content">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="current-age">
+                                <i class="fas fa-user"></i> Current Age
+                            </label>
+                            <input type="number" id="current-age" value="30" min="18" max="65">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="retirement-age">
+                                <i class="fas fa-umbrella-beach"></i> Retirement Age
+                            </label>
+                            <input type="number" id="retirement-age" value="60" min="40" max="75">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="monthly-income-needed">
+                                <i class="fas fa-money-bill-wave"></i> Monthly Income Needed (₦)
+                            </label>
+                            <div class="input-with-icon">
+                                <span class="currency">₦</span>
+                                <input type="number" id="monthly-income-needed" value="500000" min="10000" step="10000">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="current-savings">
+                                <i class="fas fa-piggy-bank"></i> Current Savings (₦)
+                            </label>
+                            <div class="input-with-icon">
+                                <span class="currency">₦</span>
+                                <input type="number" id="current-savings" value="1000000" min="0" step="10000">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-retirement" class="primary-btn calculate-btn">
+                        <i class="fas fa-calculator"></i> Calculate Retirement Plan
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <h2>Projection Results</h2>
+                    <div class="time-horizon">
+                        <span id="time-label">5-Year Projection</span>
+                    </div>
+                </div>
+                
+                <div class="results-tabs">
+                    <button class="result-tab active" data-tab="chart">
+                        <i class="fas fa-chart-line"></i> Growth Chart
+                    </button>
+                    <button class="result-tab" data-tab="breakdown">
+                        <i class="fas fa-list-ol"></i> Yearly Breakdown
+                    </button>
+                    <button class="result-tab" data-tab="summary">
+                        <i class="fas fa-file-alt"></i> Summary
+                    </button>
+                </div>
+                
+                <!-- Chart Tab -->
+                <div id="chart" class="result-content active">
+                    <div class="chart-container">
+                        <canvas id="growth-chart"></canvas>
+                    </div>
+                    
+                    <div class="chart-controls">
+                        <button id="export-chart" class="secondary-btn">
+                            <i class="fas fa-download"></i> Export Chart
+                        </button>
+                        <button id="share-results" class="secondary-btn">
+                            <i class="fas fa-share-alt"></i> Share Results
+                        </button>
+                        <button id="print-results" class="secondary-btn">
+                            <i class="fas fa-print"></i> Print Report
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Breakdown Tab -->
+                <div id="breakdown" class="result-content">
+                    <div class="breakdown-container">
+                        <table class="breakdown-table" id="breakdown-table">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Total Savings</th>
+                                    <th>Interest Earned</th>
+                                    <th>Cumulative Interest</th>
+                                    <th>Growth Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Summary Tab -->
+                <div id="summary" class="result-content">
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Total Contributions</h4>
+                                <p class="summary-value" id="total-contributions">₦0</p>
+                                <p class="summary-label">Amount you invested</p>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Total Interest</h4>
+                                <p class="summary-value" id="total-interest">₦0</p>
+                                <p class="summary-label">Earnings from investment</p>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Final Amount</h4>
+                                <p class="summary-value" id="final-amount">₦0</p>
+                                <p class="summary-label">Total after period</p>
+                            </div>
+                        </div>
+                        
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Annual Growth</h4>
+                                <p class="summary-value" id="annual-growth">0%</p>
+                                <p class="summary-label">Average yearly growth</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-insights">
+                        <h4><i class="fas fa-lightbulb"></i> Financial Insights</h4>
+                        <div class="insights-list" id="insights-list">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Investment Platforms (Affiliate Section) -->
+            <section class="affiliate-card">
+                <div class="card-header">
+                    <i class="fas fa-handshake"></i>
+                    <h2>Recommended Investment Platforms</h2>
+                    <span class="card-badge affiliate">Affiliate Partners</span>
+                </div>
+                
+                <div class="affiliate-intro">
+                    <p>Based on your savings goals, here are recommended platforms where you can start investing:</p>
+                </div>
+                
+                <div class="platforms-grid">
+                    <!-- Risevest Card -->
+                    <div class="platform-card featured">
+                        <div class="platform-header">
+                            <div class="platform-logo">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="platform-info">
+                                <h3>Risevest</h3>
+                                <div class="platform-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.5/5</span>
+                                </div>
+                            </div>
+                            <span class="featured-badge">Editor's Choice</span>
+                        </div>
+                        
+                        <div class="platform-details">
+                            <p>Invest in US stocks, ETFs, and real estate with as little as ₦10,000. Perfect for dollar-denominated investments.</p>
+                            
+                            <div class="platform-features">
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> 10-15% avg returns
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> $1 minimum
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> Regulated
+                                </span>
+                            </div>
+                            
+                            <div class="platform-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Min. Investment</span>
+                                    <span class="stat-value">₦10,000</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Avg. Returns</span>
+                                    <span class="stat-value">12-18%</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Risk Level</span>
+                                    <span class="stat-value risk-medium">Medium</span>
+                                </div>
+                            </div>
+                            
+                            <a href="https://risevest.com/ref/85AJQTA" target="_blank" class="platform-btn primary-btn affiliate-link">
+                                <i class="fas fa-external-link-alt"></i> Start Investing with Risevest
+                                <span class="affiliate-note">(Affiliate Link)</span>
+                            </a>
+                            
+                            <div class="platform-note">
+                                <i class="fas fa-gift"></i> Get 30 days of fee-free investing when you sign up through our link
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other Platforms -->
+                    <div class="platform-card">
+                        <div class="platform-header">
+                            <div class="platform-logo">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="platform-info">
+                                <h3>Cowrywise</h3>
+                                <div class="platform-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="platform-details">
+                            <p>Automated savings and investment platform with curated mutual funds and fixed income options.</p>
+                            
+                            <div class="platform-features">
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> 10-25% returns
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> ₦100 minimum
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> Automated plans
+                                </span>
+                            </div>
+                            
+                            <a href="#" class="platform-btn secondary-btn">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <div class="platform-header">
+                            <div class="platform-logo">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="platform-info">
+                                <h3>PiggyVest</h3>
+                                <div class="platform-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="platform-details">
+                            <p>Simple savings platform with automatic deductions and competitive interest rates on savings.</p>
+                            
+                            <div class="platform-features">
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> 6-15% returns
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> ₦1,000 minimum
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> Flexible savings
+                                </span>
+                            </div>
+                            
+                            <a href="#" class="platform-btn secondary-btn">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <div class="platform-header">
+                            <div class="platform-logo">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="platform-info">
+                                <h3>Banks (Fixed Deposit)</h3>
+                                <div class="platform-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>3.5/5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="platform-details">
+                            <p>Traditional fixed deposit accounts with guaranteed returns and principal protection.</p>
+                            
+                            <div class="platform-features">
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> 3-10% returns
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> ₦10,000 minimum
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-check-circle"></i> Very low risk
+                                </span>
+                            </div>
+                            
+                            <a href="#" class="platform-btn secondary-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="affiliate-disclaimer">
+                    <p><i class="fas fa-info-circle"></i> <strong>Disclaimer:</strong> We may earn a commission when you use our affiliate links. These are platforms we've reviewed and trust.</p>
+                </div>
+            </section>
+
+            <!-- Tips & Education -->
+            <section class="tips-card">
+                <div class="card-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>Investment Tips & Education</h2>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Start Early</h3>
+                        <p>The power of compounding works best when you start early. ₦10,000 invested at 25 is worth more than ₦50,000 invested at 40.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3>Diversify</h3>
+                        <p>Don't put all your eggs in one basket. Spread investments across stocks, bonds, real estate, and cash equivalents.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Consistency Beats Timing</h3>
+                        <p>Regular monthly investments (naira-cost averaging) often outperform trying to time the market perfectly.</p>
+                    </div>
+                    
+                    <div class="tip-card">
+                        <div class="tip-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Emergency Fund First</h3>
+                        <p>Always maintain 3-6 months of expenses in a liquid savings account before investing heavily.</p>
+                    </div>
+                </div>
+                
+                <div class="education-resources">
+                    <h4><i class="fas fa-book"></i> Recommended Resources</h4>
+                    <div class="resources">
+                        <a href="#" class="resource">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Beginner's Guide to Investing in Nigeria</span>
+                        </a>
+                        <a href="#" class="resource">
+                            <i class="fas fa-video"></i>
+                            <span>Video: Understanding Compound Interest</span>
+                        </a>
+                        <a href="#" class="resource">
+                            <i class="fas fa-calculator"></i>
+                            <span>Risk Tolerance Calculator</span>
+                        </a>
+                        <a href="#" class="resource">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Nigerian Market Updates</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Quick Stats -->
+            <div class="widget">
+                <h3><i class="fas fa-chart-pie"></i> Quick Stats</h3>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Monthly Goal</span>
+                        <span class="stat-value" id="monthly-goal">₦50,000</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Yearly Target</span>
+                        <span class="stat-value" id="yearly-target">₦600,000</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Projected Value</span>
+                        <span class="stat-value" id="projected-value">₦0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Time to Goal</span>
+                        <span class="stat-value" id="time-to-goal">5 years</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Savings Goals -->
+            <div class="widget">
+                <h3><i class="fas fa-bullseye"></i> Common Savings Goals</h3>
+                <div class="savings-goals">
+                    <button class="goal-btn" data-amount="500000" data-period="1" data-rate="10">
+                        <i class="fas fa-car"></i>
+                        <div>
+                            <span>Car (₦500k)</span>
+                            <small>1 year plan</small>
+                        </div>
+                    </button>
+                    
+                    <button class="goal-btn" data-amount="5000000" data-period="3" data-rate="12">
+                        <i class="fas fa-home"></i>
+                        <div>
+                            <span>House Downpayment (₦5M)</span>
+                            <small>3 year plan</small>
+                        </div>
+                    </button>
+                    
+                    <button class="goal-btn" data-amount="2000000" data-period="2" data-rate="15">
+                        <i class="fas fa-plane"></i>
+                        <div>
+                            <span>Education Abroad (₦2M)</span>
+                            <small>2 year plan</small>
+                        </div>
+                    </button>
+                    
+                    <button class="goal-btn" data-amount="10000000" data-period="5" data-rate="18">
+                        <i class="fas fa-business-time"></i>
+                        <div>
+                            <span>Business Capital (₦10M)</span>
+                            <small>5 year plan</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Inflation Calculator -->
+            <div class="widget">
+                <h3><i class="fas fa-chart-line"></i> Inflation Impact</h3>
+                <div class="inflation-calc">
+                    <p>At 15% inflation, your ₦1M today will be worth:</p>
+                    <div class="inflation-result">
+                        <span>₦<span id="inflation-value">500,000</span></span>
+                        <small>in 5 years</small>
+                    </div>
+                    <button id="calculate-inflation" class="secondary-btn small">
+                        <i class="fas fa-calculator"></i> Recalculate
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Investment Quiz -->
+            <div class="widget">
+                <h3><i class="fas fa-question-circle"></i> Investment Profile Quiz</h3>
+                <div class="quiz">
+                    <p>Find out your investment personality in 5 questions</p>
+                    <button id="start-quiz" class="primary-btn small">
+                        <i class="fas fa-play"></i> Start Quiz
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Share Widget -->
+            <div class="widget">
+                <h3><i class="fas fa-share-alt"></i> Share Calculator</h3>
+                <div class="share-widget">
+                    <button class="share-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button class="share-btn whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-btn copy" id="copy-link">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="referral-widget">
+                    <p>Earn commission by referring friends to investment platforms</p>
+                    <button id="learn-referral" class="secondary-btn small">
+                        <i class="fas fa-handshake"></i> Learn More
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-info-circle"></i> About This Calculator</h4>
+                    <p>This calculator helps Nigerians plan their savings and investments. Results are projections and actual returns may vary.</p>
+                    <p class="disclaimer"><strong>Not financial advice:</strong> Consult a qualified financial advisor before making investment decisions.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4><i class="fas fa-calculator"></i> Calculator Features</h4>
+                    <ul>
+                        <li>Compound Interest Calculator</li>
+                        <li>Retirement Planning</li>
+                        <li>Investment Comparison</li>
+                        <li>Inflation Adjustment</li>
+                        <li>Goal-based Planning</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4><i class="fas fa-handshake"></i> Affiliate Partners</h4>
+                    <ul>
+                        <li><a href="https://risevest.com/ref/85AJQTA" target="_blank">Risevest</a></li>
+                        <li>Cowrywise</li>
+                        <li>PiggyVest</li>
+                        <li>Bamboo</li>
+                        <li>Trovest</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4><i class="fas fa-phone-alt"></i> Contact & Support</h4>
+                    <p>Email: support@naijawealth.com</p>
+                    <p>Telegram: @NaijaWealth</p>
+                    <p>Twitter: @NaijaWealthCalc</p>
+                    <p>Partnerships: affiliates@naijawealth.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 NaijaWealth Calculator. All rights reserved. | Version 1.0.0</p>
+                <p>Made with ❤️ for Nigerians building wealth</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="script.js"></script>
+</body>
+</html>
