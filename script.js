@@ -124,6 +124,156 @@ document.addEventListener('DOMContentLoaded', function() {
                 calculateSavings();
             });
         });
+
+        // Enhanced Mobile Features
+function enhanceMobileExperience() {
+    // Check if mobile device
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // Add touch events for better mobile interaction
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        
+        // Prevent zoom on double-tap for buttons
+        document.querySelectorAll('button, input, select').forEach(el => {
+            el.style.fontSize = '16px'; // Prevents iOS zoom
+        });
+        
+        // Add swipe gestures for tabs
+        let startX = 0;
+        let endX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            startX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].screenX;
+            handleSwipe(startX, endX);
+        });
+    }
+    
+    // Handle viewport changes
+    window.addEventListener('resize', debounce(handleResize, 250));
+    
+    // Initial mobile optimizations
+    optimizeForScreenSize();
+}
+
+function handleSwipe(startX, endX) {
+    const threshold = 50;
+    const deltaX = endX - startX;
+    
+    if (Math.abs(deltaX) > threshold) {
+        if (deltaX > 0) {
+            // Swipe right - previous tab
+            navigateTabs('prev');
+        } else {
+            // Swipe left - next tab
+            navigateTabs('next');
+        }
+    }
+}
+
+function navigateTabs(direction) {
+    const activeTab = document.querySelector('.calc-tab.active');
+    const tabs = Array.from(document.querySelectorAll('.calc-tab'));
+    const currentIndex = tabs.indexOf(activeTab);
+    
+    let newIndex;
+    if (direction === 'next') {
+        newIndex = (currentIndex + 1) % tabs.length;
+    } else {
+        newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    }
+    
+    tabs[newIndex].click();
+}
+
+function handleResize() {
+    optimizeForScreenSize();
+    repositionElements();
+}
+
+function optimizeForScreenSize() {
+    const width = window.innerWidth;
+    
+    if (width < 768) {
+        // Mobile optimizations
+        document.body.classList.add('mobile-view');
+        document.body.classList.remove('desktop-view');
+        
+        // Simplify complex UI elements
+        simplifyUIForMobile();
+    } else {
+        // Desktop optimizations
+        document.body.classList.add('desktop-view');
+        document.body.classList.remove('mobile-view');
+        
+        // Restore full UI
+        restoreDesktopUI();
+    }
+}
+
+function simplifyUIForMobile() {
+    // Hide non-essential elements on mobile
+    document.querySelectorAll('.desktop-only').forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    // Show mobile-only elements
+    document.querySelectorAll('.mobile-only').forEach(el => {
+        el.style.display = 'block';
+    });
+    
+    // Simplify charts for mobile
+    if (chartInstance) {
+        chartInstance.options.plugins.legend.position = 'bottom';
+        chartInstance.update();
+    }
+}
+
+function restoreDesktopUI() {
+    document.querySelectorAll('.desktop-only').forEach(el => {
+        el.style.display = 'block';
+    });
+    
+    document.querySelectorAll('.mobile-only').forEach(el => {
+        el.style.display = 'none';
+    });
+}
+
+function repositionElements() {
+    // Reposition any floating elements based on screen size
+    const floatingElements = document.querySelectorAll('.floating-element');
+    
+    floatingElements.forEach(el => {
+        if (window.innerWidth < 768) {
+            el.style.position = 'static';
+            el.style.margin = '20px auto';
+        } else {
+            el.style.position = 'fixed';
+            el.style.right = '20px';
+            el.style.bottom = '20px';
+        }
+    });
+}
+
+// Utility function for debouncing
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Initialize mobile enhancements
+document.addEventListener('DOMContentLoaded', enhanceMobileExperience);
         
         // Export & Share
         document.getElementById('export-chart').addEventListener('click', exportChart);
